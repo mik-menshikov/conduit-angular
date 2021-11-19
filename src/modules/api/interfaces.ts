@@ -6,6 +6,11 @@ export interface Profile {
   loading: boolean;
 }
 
+export interface User extends Pick<Profile, 'username' | 'bio' | 'image'> {
+  email: string;
+  token: string;
+}
+
 export interface Article {
   slug: string;
   title: string;
@@ -22,4 +27,15 @@ export interface Article {
 export interface ArticlesResult {
   articles: Article[];
   articlesCount: number;
+}
+
+export interface LoginRequest {
+  user: {
+    email: string;
+    password: string;
+  };
+}
+
+export interface LoginResponse {
+  user: User;
 }

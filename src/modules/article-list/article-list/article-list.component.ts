@@ -21,7 +21,7 @@ export class ArticleListComponent implements OnInit {
   constructor(private store: Store<ArticlesState>) {}
 
   ngOnInit(): void {
-    this.articles$ = this.store.select(getArticles).pipe(tap(console.log));
+    this.articles$ = this.store.select(getArticles);
     this.loading$ = this.store.select(isLoading);
   }
 }
