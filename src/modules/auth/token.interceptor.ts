@@ -17,8 +17,6 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    console.log('intercept');
-
     return this.tokenService.get().pipe(
       mergeMap((token) => {
         if (token) {
