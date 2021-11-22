@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
+  ArticleResult,
   ArticlesResult,
   LoginRequest,
   LoginResponse,
@@ -34,5 +35,9 @@ export class ApiService {
 
   loadArticles() {
     return this.http.get<ArticlesResult>(`${baseUrl}/articles`);
+  }
+
+  loadArticle(slug: string) {
+    return this.http.get<ArticleResult>(`${baseUrl}/articles/${slug}`);
   }
 }

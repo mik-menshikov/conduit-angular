@@ -8,6 +8,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('src/modules/home/home.module').then((m) => m.HomeModule),
   },
+  {
+    path: 'article/:slug',
+    loadChildren: () =>
+      import('src/modules/article/article.module').then((m) => m.ArticleModule),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,20 @@
+<div class="article-meta">
+	<a href=""><img src="{{ user.image }}" /></a>
+	<div class="info">
+		<a href="" class="author">{{ user.username }}</a>
+		<span class="date">{{ createdAt | date }}</span>
+	</div>
+	<button class="btn btn-sm btn-outline-secondary" (click)="onFollow()">
+		<i class="ion-plus-round"></i>
+		&nbsp;
+		Follow {{ user.username }}
+
+		<span class="counter" *ngIf="user.following">({{ user.following }})</span>
+	</button>
+	&nbsp;&nbsp;
+	<button class="btn btn-sm btn-outline-primary" (click)="onFavorite()">
+		<i class="ion-heart"></i>
+		&nbsp;
+		Favorite Post <span class="counter" *ngIf="favoritesCount">({{ favoritesCount }})</span>
+	</button>
+</div>
