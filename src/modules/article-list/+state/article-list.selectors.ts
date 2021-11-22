@@ -12,8 +12,6 @@ const getArticleList = createFeatureSelector<ArticleListState>(
 export const getArticles = createSelector(
   getArticleList,
   (state: ArticleListState) => {
-    console.log(state);
-
     return state[articleListFeatureKey].entries;
   }
 );
