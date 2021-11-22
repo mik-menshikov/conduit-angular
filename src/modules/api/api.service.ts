@@ -26,6 +26,12 @@ export class ApiService {
     );
   }
 
+  getUser() {
+    return this.http.get<LoginResponse>(`${baseUrl}/user`, {
+      headers: jsonHeaders,
+    });
+  }
+
   loadArticles() {
     return this.http.get<ArticlesResult>(`${baseUrl}/articles`);
   }

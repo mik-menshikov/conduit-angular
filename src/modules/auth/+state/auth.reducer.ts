@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { User } from 'src/modules/api/interfaces';
 import * as AuthActions from './auth.actions';
 
@@ -6,14 +6,14 @@ export const authFeatureKey = 'auth';
 
 export interface AuthState {
   [authFeatureKey]: {
-    user: User | undefined;
+    user: User | null;
     loading: boolean;
     loggedIn: boolean;
   };
 }
 
 export const initialState: AuthState = {
-  [authFeatureKey]: { user: undefined, loading: false, loggedIn: false },
+  [authFeatureKey]: { user: null, loading: false, loggedIn: false },
 };
 
 export const reducer = createReducer(
@@ -30,6 +30,17 @@ export const reducer = createReducer(
         loading: false,
         loggedIn: true,
       },
+    };
+  }),
+  on(AuthActions.getUser, (state, action) => {
+    const authState = state[authFeatureKey];
+    return { ...state, [authFeatureKey]: { ...authState, loading: true } };
+  }),
+  on(AuthActions.getUserSuccess, (state, action) => {
+    const authState = state[authFeatureKey];
+    return {
+      ...state,
+      [authFeatureKey]: { ...authState, loading: false, user: action.user },
     };
   })
 );

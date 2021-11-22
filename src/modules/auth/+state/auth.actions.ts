@@ -15,3 +15,9 @@ export const loginFailure = createAction(
   '[Auth] login Failure',
   props<{ error: any }>()
 );
+
+export const getUser = createAction('[Auth] user');
+export const getUserSuccess = createAction(
+  '[Auth] user Success',
+  props<{ user: User }>()
+);

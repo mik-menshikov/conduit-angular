@@ -37,4 +37,15 @@ export class AuthEffects {
       ),
     { dispatch: false }
   );
+
+  getUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.getUser),
+      switchMap(() =>
+        this.apiService
+          .getUser()
+          .pipe(map((results) => AuthActions.getUserSuccess(results)))
+      )
+    )
+  );
 }
