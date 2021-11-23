@@ -2,14 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ofType } from '@ngrx/effects';
 import { Store, ActionsSubject } from '@ngrx/store';
-import {
-  combineLatest,
-  Observable,
-  of,
-  Subject,
-  Subscriber,
-  Subscription,
-} from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { Article, Comment, User } from 'src/modules/api/interfaces';
 import {
@@ -32,15 +25,13 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   resetComment$: Subject<boolean> = new Subject();
 
-  actionsSubscription: ActionsSubject;
+  actionsSubscription: Subscription;
 
   constructor(
     private store: Store,
     private route: ActivatedRoute,
     private actionsSubj: ActionsSubject
-  ) {
-    this.actionsSubscription = actionsSubj;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.route.params
@@ -60,9 +51,11 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.comments$ = this.store.select(ArticleSelectors.getComments);
     this.user$ = this.store.select(AuthSelectors.getUser);
 
-    this.actionsSubscription.pipe(ofType(postCommentSuccess)).subscribe(() => {
-      this.resetComment$.next();
-    });
+    this.actionsSubscription = this.actionsSubj
+      .pipe(ofType(postCommentSuccess))
+      .subscribe(() => {
+        this.resetComment$.next();
+      });
   }
 
   submitComment(slug: string, body: string) {
@@ -70,7 +63,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.actionsSubj.unsubscribe();
+    this.actionsSubscription.unsubscribe();
     this.resetComment$.complete();
   }
 }

@@ -36,6 +36,6 @@ export class CommentEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.reset$.unsubscribe();
+    // this.reset$.unsubscribe();
   }
 }
