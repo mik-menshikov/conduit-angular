@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, concatMap, withLatestFrom } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
 
 import * as ArticleActions from './article.actions';
@@ -9,14 +9,31 @@ import * as ArticleActions from './article.actions';
 export class ArticleEffects {
   constructor(private actions$: Actions, private apiService: ApiService) {}
 
-  loadArticle$ = createEffect(() =>
+  loadArticle$ = createEffect(() => {
+    const loadAction$ = this.actions$.pipe(ofType(ArticleActions.loadArticle));
+
+    return loadAction$.pipe(
+      switchMap((action) => this.apiService.loadArticle(action.slug)),
+      withLatestFrom(loadAction$),
+      switchMap(([result, action]) => [
+        ArticleActions.loadArticleSuccess(result),
+        ArticleActions.loadComments({ slug: action.slug }),
+      ])
+    );
+  });
+
+  loadComments$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ArticleActions.loadArticle),
-      switchMap((action) => {
-        return this.apiService
-          .loadArticle(action.slug)
-          .pipe(map((result) => ArticleActions.loadArticleSuccess(result)));
-      })
+      ofType(ArticleActions.loadComments),
+      concatMap((action) =>
+        this.apiService
+          .loadComments(action.slug)
+          .pipe(
+            map((result) =>
+              ArticleActions.loadCommentsSuccess({ comments: result.comments })
+            )
+          )
+      )
     )
   );
 }

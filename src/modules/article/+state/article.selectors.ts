@@ -8,15 +8,21 @@ const getArticleState = createFeatureSelector<ArticleState>(articleFeatureKey);
 
 const getArticle = createSelector(
   getArticleState,
-  (state) => state[articleFeatureKey].currentArticle
+  (state) => state.currentArticle
+);
+
+const getComments = createSelector(
+  getArticleState,
+  (state) => state.currentComments
 );
 
 const isArticleLoading = createSelector(
   getArticleState,
-  (state) => state[articleFeatureKey].loading
+  (state) => state.loading
 );
 
 export const ArticleSelectors = {
   getArticle,
   isArticleLoading,
+  getComments,
 };

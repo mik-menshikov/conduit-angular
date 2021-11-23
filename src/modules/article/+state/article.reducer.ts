@@ -1,34 +1,34 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Article } from 'src/modules/api/interfaces';
+import { Article, Comment } from 'src/modules/api/interfaces';
 import * as ArticleActions from './article.actions';
 
 export const articleFeatureKey = 'article';
 
 export interface ArticleState {
-  [articleFeatureKey]: {
-    currentArticle: Article | null;
-    loading: boolean;
-  };
+  currentArticle: Article | null;
+  currentComments: Comment[];
+  loading: boolean;
+}
+
+export interface ArticleRootState {
+  readonly [articleFeatureKey]: ArticleState;
 }
 
 export const initialState: ArticleState = {
-  [articleFeatureKey]: {
-    currentArticle: null,
-    loading: false,
-  },
+  currentArticle: null,
+  currentComments: [],
+  loading: false,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(ArticleActions.loadArticle, (state, action) => ({
-    ...state,
-    [articleFeatureKey]: { currentArticle: null, loading: true },
-  })),
   on(ArticleActions.loadArticleSuccess, (state, action) => ({
     ...state,
-    [articleFeatureKey]: {
-      currentArticle: action.article,
-      loading: false,
-    },
-  }))
+    currentArticle: action.article,
+    currentComments: [],
+    loading: false,
+  })),
+  on(ArticleActions.loadCommentsSuccess, (state, action) => {
+    return { ...state, currentComments: action.comments };
+  })
 );
