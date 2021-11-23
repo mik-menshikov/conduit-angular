@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { Comment } from 'src/modules/api/interfaces';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Comment, User } from 'src/modules/api/interfaces';
 
 @Component({
   selector: 'comment',
@@ -9,4 +8,7 @@ import { Comment } from 'src/modules/api/interfaces';
 })
 export class CommentComponent {
   @Input() comment: Comment;
+  @Input() currentUser: User | null;
+
+  @Output() remove = new EventEmitter<number>();
 }

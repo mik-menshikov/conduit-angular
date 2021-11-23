@@ -36,5 +36,13 @@ export const reducer = createReducer(
       ...state,
       currentComments: [...state.currentComments, action.comment],
     };
+  }),
+  on(ArticleActions.removeCommentSuccess, (state, action) => {
+    return {
+      ...state,
+      currentComments: state.currentComments.filter(
+        (comment) => comment.id !== action.id
+      ),
+    };
   })
 );

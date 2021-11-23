@@ -45,3 +45,18 @@ export const postCommentFailure = createAction(
   '[Article] Post Comment Failure',
   props<{ error: any }>()
 );
+
+export const removeComment = createAction(
+  '[Article] Remove Comment',
+  props<{ slug: string; id: number }>()
+);
+
+export const removeCommentSuccess = createAction(
+  '[Article] Remove Comment Success',
+  props<{ id: number }>()
+);
+
+export const removeCommentFailure = createAction(
+  '[Article] Remove Comment Failure',
+  props<{ error: any }>()
+);

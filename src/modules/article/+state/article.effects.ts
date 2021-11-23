@@ -57,4 +57,17 @@ export class ArticleEffects {
       )
     )
   );
+
+  removeComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleActions.removeComment),
+      mergeMap((action) =>
+        this.apiService
+          .removeComment(action.slug, action.id)
+          .pipe(
+            map(() => ArticleActions.removeCommentSuccess({ id: action.id }))
+          )
+      )
+    )
+  );
 }

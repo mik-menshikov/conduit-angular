@@ -56,4 +56,10 @@ export class ApiService {
       { headers: jsonHeaders }
     );
   }
+
+  removeComment(slug: string, id: number) {
+    return this.http.delete<CommentResult>(
+      `${baseUrl}/articles/${slug}/comments/${id}`
+    );
+  }
 }

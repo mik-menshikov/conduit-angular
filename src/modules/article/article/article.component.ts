@@ -9,6 +9,7 @@ import {
   loadArticle,
   postComment,
   postCommentSuccess,
+  removeComment,
 } from 'src/modules/article/+state/article.actions';
 import { ArticleSelectors } from 'src/modules/article/+state/article.selectors';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
@@ -60,6 +61,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   submitComment(slug: string, body: string) {
     this.store.dispatch(postComment({ slug, body }));
+  }
+
+  removeComment(slug: string, id: number) {
+    this.store.dispatch(removeComment({ slug, id }));
   }
 
   ngOnDestroy(): void {

@@ -25,7 +25,8 @@
 					<comment-editor *ngIf="user$ | async as user" [user]="user"
 						(submitComment)="submitComment(article.slug, $event)" [reset$]="resetComment$">
 					</comment-editor>
-					<comment *ngFor="let comment of comments$ | async" [comment]="comment">
+					<comment *ngFor="let comment of comments$ | async" [comment]="comment"
+						(remove)="removeComment(article.slug, $event)" [currentUser]="(user$ | async)">
 					</comment>
 				</div>
 			</div>
