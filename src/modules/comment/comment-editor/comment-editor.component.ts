@@ -16,19 +16,9 @@ import { User } from 'src/modules/api/interfaces';
   templateUrl: './comment-editor.component.html',
   styleUrls: ['./comment-editor.component.scss'],
 })
-export class CommentEditorComponent implements OnInit, OnDestroy {
+export class CommentEditorComponent {
   @Input() user: User;
   @Output() submitComment = new EventEmitter<string>();
-
-  @Input() reset$: Subject<boolean>;
-
-  unsubscribe$ = new Subject();
-
-  ngOnInit(): void {
-    this.reset$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(() => this.commentForm.setValue({ body: '' }));
-  }
 
   commentForm = this.fb.group({
     body: ['', [Validators.required, Validators.minLength(5)]],
@@ -36,12 +26,11 @@ export class CommentEditorComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder) {}
 
-  onSubmit() {
-    this.submitComment.emit(this.commentForm.value.body);
+  reset() {
+    this.commentForm.setValue({ body: '' });
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
+  onSubmit() {
+    this.submitComment.emit(this.commentForm.value.body);
   }
 }

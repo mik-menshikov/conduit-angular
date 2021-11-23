@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-xs-12 col-md-8 offset-md-2">
 					<comment-editor *ngIf="user$ | async as user" [user]="user"
-						(submitComment)="submitComment(article.slug, $event)" [reset$]="resetComment$">
+						(submitComment)="submitComment(article.slug, $event)">
 					</comment-editor>
 					<comment *ngFor="let comment of comments$ | async" [comment]="comment"
 						(remove)="removeComment(article.slug, $event)" [currentUser]="(user$ | async)">

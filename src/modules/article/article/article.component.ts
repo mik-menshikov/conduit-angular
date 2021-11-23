@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ofType } from '@ngrx/effects';
 import { Store, ActionsSubject } from '@ngrx/store';
@@ -13,6 +13,7 @@ import {
 } from 'src/modules/article/+state/article.actions';
 import { ArticleSelectors } from 'src/modules/article/+state/article.selectors';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
+import { CommentEditorComponent } from 'src/modules/comment/comment-editor/comment-editor.component';
 
 @Component({
   selector: 'app-article',
@@ -24,7 +25,8 @@ export class ArticleComponent implements OnInit, OnDestroy {
   comments$: Observable<Comment[]>;
   user$: Observable<User | null>;
 
-  resetComment$: Subject<boolean> = new Subject();
+  @ViewChild(CommentEditorComponent)
+  private editorComponent: CommentEditorComponent;
 
   actionsSubscription: Subscription;
 
@@ -55,7 +57,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
     this.actionsSubscription = this.actionsSubj
       .pipe(ofType(postCommentSuccess))
       .subscribe(() => {
-        this.resetComment$.next();
+        this.editorComponent.reset();
       });
   }
 
@@ -69,6 +71,5 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.actionsSubscription.unsubscribe();
-    this.resetComment$.complete();
   }
 }
