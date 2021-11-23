@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { ArticleListEffects } from 'src/modules/article-list/+state/article-list.effects';
 import { ApiModule } from 'src/modules/api/api.module';
 import { ArticleListItemComponent } from './article-list-item/article-list-item.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [ArticleListComponent, ArticleListItemComponent],
@@ -21,6 +22,7 @@ import { ArticleListItemComponent } from './article-list-item/article-list-item.
       initialState: initialState,
     }),
     EffectsModule.forFeature([ArticleListEffects]),
+    RouterModule,
   ],
   exports: [ArticleListComponent],
 })

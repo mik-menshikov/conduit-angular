@@ -29,6 +29,10 @@ export interface ArticlesResult {
   articlesCount: number;
 }
 
+export interface ArticleResult {
+  article: Article;
+}
+
 export interface LoginRequest {
   user: {
     email: string;
