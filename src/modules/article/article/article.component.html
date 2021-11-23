@@ -20,6 +20,15 @@
 					[favoritesCount]="article.favoritesCount" [articleSlug]="article.slug"></app-article-actions>
 			</div>
 
+			<div class="row">
+				<div class="col-xs-12 col-md-8 offset-md-2">
+					<comment-editor *ngIf="user$ | async as user" [user]="user"
+						(submitComment)="submitComment(article.slug, $event)" [reset$]="resetComment$">
+					</comment-editor>
+					<comment *ngFor="let comment of comments$ | async" [comment]="comment">
+					</comment>
+				</div>
+			</div>
 		</div>
 	</div>
 </ng-container>

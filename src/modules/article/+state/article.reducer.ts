@@ -30,5 +30,11 @@ export const reducer = createReducer(
   })),
   on(ArticleActions.loadCommentsSuccess, (state, action) => {
     return { ...state, currentComments: action.comments };
+  }),
+  on(ArticleActions.postCommentSuccess, (state, action) => {
+    return {
+      ...state,
+      currentComments: [...state.currentComments, action.comment],
+    };
   })
 );

@@ -19,7 +19,10 @@ export class TokenInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return this.tokenService.get().pipe(
       mergeMap((token) => {
-        if (token) {
+        if (
+          token &&
+          !(request.method === 'GET' && request.url.match(/comments$/))
+        ) {
           request = request.clone({
             setHeaders: {
               Authorization: `Token ${token}`,
