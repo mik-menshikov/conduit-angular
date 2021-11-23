@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { User } from 'src/modules/api/interfaces';
 
 @Component({
@@ -21,8 +22,12 @@ export class CommentEditorComponent implements OnInit, OnDestroy {
 
   @Input() reset$: Subject<boolean>;
 
+  unsubscribe$ = new Subject();
+
   ngOnInit(): void {
-    this.reset$.subscribe(() => this.commentForm.setValue({ body: '' }));
+    this.reset$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.commentForm.setValue({ body: '' }));
   }
 
   commentForm = this.fb.group({
@@ -36,6 +41,7 @@ export class CommentEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.reset$.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
