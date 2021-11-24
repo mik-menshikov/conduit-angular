@@ -13,6 +13,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('src/modules/article/article.module').then((m) => m.ArticleModule),
   },
+  {
+    path: 'editor',
+    loadChildren: () =>
+      import('src/modules/article-editor/article-editor.module').then(
+        (m) => m.ArticleEditorModule
+      ),
+  },
 ];
 
 @NgModule({

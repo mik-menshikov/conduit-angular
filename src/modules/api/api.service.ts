@@ -7,7 +7,7 @@ import {
   CommentsResult,
   LoginRequest,
   LoginResponse,
-  User,
+  ChangedArticle,
 } from 'src/modules/api/interfaces';
 
 const baseUrl = 'http://localhost:3000/api';
@@ -41,6 +41,22 @@ export class ApiService {
 
   loadArticle(slug: string) {
     return this.http.get<ArticleResult>(`${baseUrl}/articles/${slug}`);
+  }
+
+  publishArticle(article: ChangedArticle) {
+    return this.http.post<ArticleResult>(
+      `${baseUrl}/articles`,
+      JSON.stringify({ article }),
+      { headers: jsonHeaders }
+    );
+  }
+
+  updateArticle(slug: string, article: ChangedArticle) {
+    return this.http.put<ArticleResult>(
+      `${baseUrl}/articles/${slug}`,
+      JSON.stringify({ article }),
+      { headers: jsonHeaders }
+    );
   }
 
   loadComments(slug: string) {

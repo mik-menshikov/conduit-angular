@@ -24,6 +24,15 @@ export interface Article {
   author: Profile;
 }
 
+export type ChangedArticle = Pick<
+  Article,
+  'title' | 'body' | 'tagList' | 'description'
+>;
+
+export type UpdatableArticle = ChangedArticle & Pick<Article, 'slug'>;
+
+// export type ChangedArticle = Pick<Article, 'title' | 'body' | 'description'>;
+
 export interface ArticlesResult {
   articles: Article[];
   articlesCount: number;
