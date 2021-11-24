@@ -32,6 +32,20 @@ export interface ArticlesResult {
 export interface ArticleResult {
   article: Article;
 }
+export interface Comment {
+  id: number;
+  body: string;
+  createdAt: string;
+  author: Profile;
+}
+
+export interface CommentsResult {
+  comments: Comment[];
+}
+
+export interface CommentResult {
+  comment: Comment;
+}
 
 export interface LoginRequest {
   user: {

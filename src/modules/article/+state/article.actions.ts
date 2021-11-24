@@ -30,3 +30,33 @@ export const loadCommentsFailure = createAction(
   '[Article] Load Comments Failure',
   props<{ error: any }>()
 );
+
+export const postComment = createAction(
+  '[Article] Post Comment',
+  props<{ slug: string; body: string }>()
+);
+
+export const postCommentSuccess = createAction(
+  '[Article] Post Comment Success',
+  props<{ comment: Comment }>()
+);
+
+export const postCommentFailure = createAction(
+  '[Article] Post Comment Failure',
+  props<{ error: any }>()
+);
+
+export const removeComment = createAction(
+  '[Article] Remove Comment',
+  props<{ slug: string; id: number }>()
+);
+
+export const removeCommentSuccess = createAction(
+  '[Article] Remove Comment Success',
+  props<{ id: number }>()
+);
+
+export const removeCommentFailure = createAction(
+  '[Article] Remove Comment Failure',
+  props<{ error: any }>()
+);

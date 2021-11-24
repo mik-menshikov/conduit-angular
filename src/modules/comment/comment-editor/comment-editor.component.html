@@ -1,0 +1,9 @@
+<form class="card comment-form" [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+	<div class="card-block">
+		<textarea class="form-control" placeholder="Write a comment..." rows="3" formControlName="body"> </textarea>
+	</div>
+	<div class="card-footer">
+		<img [src]="user.image" class="comment-author-img" />
+		<button class="btn btn-sm btn-primary" [disabled]="commentForm.invalid"> Post Comment </button>
+	</div>
+</form>

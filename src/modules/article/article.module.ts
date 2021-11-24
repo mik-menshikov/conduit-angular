@@ -11,11 +11,13 @@ import {
 } from 'src/modules/article/+state/article.reducer';
 import { reducer } from 'src/modules/article/+state/article.reducer';
 import { ArticleActionsComponent } from './article-actions/article-actions.component';
+import { CommentModule } from 'src/modules/comment/comment.module';
 
 @NgModule({
   declarations: [ArticleComponent, ArticleActionsComponent],
   imports: [
     CommonModule,
+    CommentModule,
     RouterModule.forChild([
       {
         path: '',

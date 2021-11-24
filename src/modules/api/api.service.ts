@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import {
   ArticleResult,
   ArticlesResult,
+  CommentResult,
+  CommentsResult,
   LoginRequest,
   LoginResponse,
   User,
@@ -39,5 +41,23 @@ export class ApiService {
 
   loadArticle(slug: string) {
     return this.http.get<ArticleResult>(`${baseUrl}/articles/${slug}`);
+  }
+
+  loadComments(slug: string) {
+    return this.http.get<CommentsResult>(
+      `${baseUrl}/articles/${slug}/comments`
+    );
+  }
+
+  postComment(slug: string, body: string) {
+    return this.http.post<CommentResult>(
+      `${baseUrl}/articles/${slug}/comments`,
+      JSON.stringify({ comment: { body } }),
+      { headers: jsonHeaders }
+    );
+  }
+
+  removeComment(slug: string, id: number) {
+    return this.http.delete(`${baseUrl}/articles/${slug}/comments/${id}`);
   }
 }
