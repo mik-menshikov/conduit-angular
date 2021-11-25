@@ -1,0 +1,6 @@
+<ul class="pagination" *ngIf="totalPages > 1">
+	<li class="page-item" [ngClass]="{ active: pageNumber === currentPage }" *ngFor="let pageNumber of pageNumbers">
+		<a class="page-link" [routerLink]="" [queryParams]="{ page: pageNumber }" queryParamsHandling="merge">{{
+			pageNumber }}</a>
+	</li>
+</ul>

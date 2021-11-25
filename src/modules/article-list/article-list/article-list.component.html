@@ -4,3 +4,8 @@
 <ng-template #isLoading>
 	<div>Loading articles...</div>
 </ng-template>
+<ng-container *ngIf="filter$ | async as filter">
+	<ng-container *ngIf="totalPages$ | async as totalPages">
+		<pager [totalPages]="totalPages" [currentPage]="filter.page"></pager>
+	</ng-container>
+</ng-container>

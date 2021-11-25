@@ -12,15 +12,17 @@ export class ArticleListEffects {
   loadArticles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ArticleListActions.loadArticleLists),
-      switchMap(() =>
-        this.apiService.loadArticles().pipe(
-          map((results) =>
-            ArticleListActions.loadArticleListsSuccess({
-              articles: results.articles,
-              articlesCount: results.articlesCount,
+      switchMap((action) =>
+        this.apiService
+          .loadArticles(action.pageSize, action.page, action.tag, action.feed)
+          .pipe(
+            map((results) => {
+              return ArticleListActions.loadArticleListsSuccess({
+                articles: results.articles,
+                totalPages: Math.ceil(results.articlesCount / action.pageSize),
+              });
             })
           )
-        )
       )
     )
   );

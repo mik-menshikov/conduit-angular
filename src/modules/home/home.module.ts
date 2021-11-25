@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { ArticleListModule } from 'src/modules/article-list/article-list.module';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
+import { homeFeature } from 'src/modules/home/+state/home.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { HomeEffects } from 'src/modules/home/+state/home.effects';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -15,6 +19,8 @@ import { RouterModule } from '@angular/router';
         component: HomeComponent,
       },
     ]),
+    StoreModule.forFeature(homeFeature),
+    EffectsModule.forFeature([HomeEffects]),
   ],
   exports: [HomeComponent],
 })

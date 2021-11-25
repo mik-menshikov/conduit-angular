@@ -39,6 +39,10 @@ export interface ArticlesResult {
 export interface ArticleResult {
   article: Article;
 }
+
+export interface TagsResult {
+  tags: string[];
+}
 export interface Comment {
   id: number;
   body: string;
