@@ -2,8 +2,6 @@ import { createReducer, on } from '@ngrx/store';
 import { Article } from 'src/modules/api/interfaces';
 import * as ArticleListActions from './article-list.actions';
 
-const PAGE_SIZE = 5;
-
 export const articleListFeatureKey = 'article-list';
 
 export type Feed = 'all' | 'user';
@@ -25,7 +23,7 @@ export interface ArticlesState {
 export const initialState: ArticlesState = {
   entries: [],
   totalPages: 1,
-  pageSize: PAGE_SIZE,
+  pageSize: 1,
   loading: false,
   filter: {
     tag: '',

@@ -11,12 +11,14 @@ import { ApiModule } from 'src/modules/api/api.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { HttpClientModule } from '@angular/common/http';
+import { ConfigModule } from 'src/modules/config/config.module';
 
 @NgModule({
   declarations: [AppComponent, NavComponent],
   imports: [
     HttpClientModule,
     ApiModule,
+    ConfigModule,
     AuthModule,
     BrowserModule,
     AppRoutingModule,
