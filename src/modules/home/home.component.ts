@@ -5,7 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import * as ArticleListActions from 'src/modules/article-list/+state/article-list.actions';
 import { ArticlesFilter } from 'src/modules/article-list/+state/article-list.reducer';
 import { selectFilter } from 'src/modules/article-list/+state/article-list.selectors';
-import { ConfigModule } from 'src/modules/config/config.module';
 import { ConfigService } from 'src/modules/config/config.service';
 import { loadTags } from 'src/modules/home/+state/home.actions';
 import { selectTags } from 'src/modules/home/+state/home.reducer';

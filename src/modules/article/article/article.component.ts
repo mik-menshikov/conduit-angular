@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ofType } from '@ngrx/effects';
 import { Store, ActionsSubject } from '@ngrx/store';
-import { Observable, of, Subject, Subscription } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Article, Comment, User } from 'src/modules/api/interfaces';
 import {
   loadArticle,

@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { NavComponent } from './components/nav/nav.component';
 import { EffectsModule } from '@ngrx/effects';
-import { HomeModule } from 'src/modules/home/home.module';
 import { ApiModule } from 'src/modules/api/api.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthModule } from 'src/modules/auth/auth.module';

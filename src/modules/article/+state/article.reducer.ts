@@ -1,4 +1,4 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { Article, Comment } from 'src/modules/api/interfaces';
 import * as ArticleActions from './article.actions';
 
