@@ -31,7 +31,7 @@
 					<p>Popular Tags</p>
 					<div class="tag-list">
 						<a *ngFor="let tag of tags$ | async" [routerLink]="" [queryParams]="{tag: tag, page: 1}"
-							class="tag-pill tag-default">
+							class="tag-pill tag-default" [ngClass]="{ active: filter.tag === tag}">
 							{{ tag }}
 						</a>
 					</div>
