@@ -57,7 +57,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
 
     // set initial values for fields
     this.actionsSubj
-      .pipe(takeUntil(this.unsubscribe$), ofType(loadArticleSuccess))
+      .pipe(ofType(loadArticleSuccess), takeUntil(this.unsubscribe$))
       .subscribe((action) => {
         const { title, description, body, tagList } = action.article;
         this.articleForm.setValue({
@@ -70,7 +70,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
 
     // sync the store with the form
     this.articleForm.valueChanges
-      .pipe(takeUntil(this.unsubscribe$), debounceTime(500))
+      .pipe(debounceTime(500), takeUntil(this.unsubscribe$))
       .subscribe(() => {
         const { title, description, body } = this.articleForm.value;
         const tags: string = this.articleForm.value.tags ?? '';

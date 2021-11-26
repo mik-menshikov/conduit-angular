@@ -4,40 +4,54 @@ import * as ArticleListActions from './article-list.actions';
 
 export const articleListFeatureKey = 'article-list';
 
+export type Feed = 'all' | 'user';
+
+export interface ArticlesFilter {
+  tag: string;
+  feed: Feed;
+  page: number;
+}
+
 export interface ArticlesState {
   entries: Article[];
-  count: number;
   loading: boolean;
+  totalPages: number;
+  pageSize: number;
+  filter: ArticlesFilter;
 }
 
-export interface ArticleListState {
-  [articleListFeatureKey]: ArticlesState;
-}
-
-export const initialState: ArticleListState = {
-  [articleListFeatureKey]: {
-    entries: [],
-    count: 0,
-    loading: false,
+export const initialState: ArticlesState = {
+  entries: [],
+  totalPages: 1,
+  pageSize: 1,
+  loading: false,
+  filter: {
+    tag: '',
+    feed: 'all',
+    page: 1,
   },
 };
 
 export const reducer = createReducer(
   initialState,
-  on(ArticleListActions.loadArticleLists, (state, _) => {
+  on(ArticleListActions.loadArticleLists, (state, action) => {
+    const filter: ArticlesFilter = {
+      page: action.page ?? 1,
+      feed: action.feed ?? 'all',
+      tag: action.tag ?? '',
+    };
     return {
       ...state,
-      [articleListFeatureKey]: { loading: true, entries: [], count: 0 },
+      loading: true,
+      filter,
     };
   }),
   on(ArticleListActions.loadArticleListsSuccess, (state, action) => {
     return {
       ...state,
-      [articleListFeatureKey]: {
-        entries: action.articles,
-        count: action.articlesCount,
-        loading: false,
-      },
+      entries: action.articles,
+      totalPages: action.totalPages,
+      loading: false,
     };
   })
 );

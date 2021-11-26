@@ -1,8 +1,4 @@
-import {
-  createFeature,
-  createFeatureSelector,
-  createSelector,
-} from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import {
   authFeatureKey,
   AuthState,

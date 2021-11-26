@@ -5,13 +5,23 @@
 			<p>A place to share your knowledge.</p>
 		</div>
 	</div>
-	<div class="container page">
+	<div class="container page" *ngIf="filter$ | async as filter">
 		<div class="row">
 			<div class="col-md-9">
 				<div class="feed-toggle">
 					<ul class="nav nav-pills outline-active">
-						<li class="nav-item"> <a class="nav-link disabled" href="">Your Feed</a> </li>
-						<li class="nav-item"> <a class="nav-link active" href="">Global Feed</a> </li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{active: filter.feed === 'user'}" [routerLink]=""
+								[queryParams]="{ feed: 'user', page: 1}">
+								Your Feed
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [ngClass]="{active: filter.feed === 'all'}" [routerLink]=""
+								[queryParams]="{ feed: 'all', page: 1}">
+								Global Feed
+							</a>
+						</li>
 					</ul>
 				</div>
 				<app-article-list></app-article-list>
@@ -19,12 +29,11 @@
 			<div class="col-md-3">
 				<div class="sidebar">
 					<p>Popular Tags</p>
-					<div class="tag-list"> <a href="" class="tag-pill tag-default">programming</a> <a href=""
-							class="tag-pill tag-default">javascript</a> <a href=""
-							class="tag-pill tag-default">emberjs</a> <a href=""
-							class="tag-pill tag-default">angularjs</a> <a href="" class="tag-pill tag-default">react</a>
-						<a href="" class="tag-pill tag-default">mean</a> <a href=""
-							class="tag-pill tag-default">node</a> <a href="" class="tag-pill tag-default">rails</a>
+					<div class="tag-list">
+						<a *ngFor="let tag of tags$ | async" [routerLink]="" [queryParams]="{tag: tag, page: 1}"
+							class="tag-pill tag-default" [ngClass]="{ active: filter.tag === tag}">
+							{{ tag }}
+						</a>
 					</div>
 				</div>
 			</div>

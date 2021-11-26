@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Profile, User } from 'src/modules/api/interfaces';
+import { Profile } from 'src/modules/api/interfaces';
 
 @Component({
   selector: 'app-article-actions',
