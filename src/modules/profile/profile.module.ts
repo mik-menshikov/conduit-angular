@@ -18,6 +18,10 @@ import { ArticleListModule } from 'src/modules/article-list/article-list.module'
         path: ':username',
         component: ProfileComponent,
       },
+      {
+        path: ':username/favorites',
+        component: ProfileComponent,
+      },
     ]),
     StoreModule.forFeature(profileFeature),
     EffectsModule.forFeature([ProfileEffects]),

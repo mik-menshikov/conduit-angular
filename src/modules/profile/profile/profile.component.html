@@ -29,14 +29,13 @@
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
 							<a class="nav-link" href="#" [ngClass]="{ active: viewMode === 'user' }"
-								[routerLink]="['/profile', profile.username]" [queryParams]="{feed: 'user', page: 1}"
-								(click)="viewMode='user';$event.preventDefault()">My Articles</a>
+								[routerLink]="['/profile', profile.username]">
+								My Articles
+							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" [routerLink]="['/profile', profile.username]"
-								[queryParams]="{feed: 'favorited', page: 1}"
-								[ngClass]="{ active: viewMode === 'favorited' }"
-								(click)="viewMode='favorited';$event.preventDefault()">
+							<a class="nav-link" [routerLink]="['/profile', profile.username, 'favorites']"
+								[ngClass]="{ active: viewMode === 'favorited' }">
 								Favorited Articles
 							</a>
 						</li>

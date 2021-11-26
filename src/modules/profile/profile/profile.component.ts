@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { withLatestFrom } from 'rxjs/operators';
 import { Profile } from 'src/modules/api/interfaces';
 import { ConfigService } from 'src/modules/config/config.service';
 import {
@@ -40,22 +41,25 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.store.dispatch(ProfileActions.loadProfile({ username }));
 
     this.subscription.add(
-      this.route.queryParams.subscribe((params) => {
-        let action;
-        const actionPayload = {
-          username,
-          pageSize: this.config.pageSize,
-          page: params.page ? +params.page : 1,
-        };
-        if (!params.feed || params.feed === 'user') {
-          this.viewMode = 'user';
-          action = ProfileActions.loadProfileArticles(actionPayload);
-        } else {
-          this.viewMode = 'favorited';
-          action = ProfileActions.loadFavoritedArticles(actionPayload);
-        }
-        this.store.dispatch(action);
-      })
+      this.route.queryParams
+        .pipe(withLatestFrom(this.route.url))
+        .subscribe(([queryParams, url]) => {
+          this.viewMode =
+            url[1] && url[1].path === 'favorites' ? 'favorited' : 'user';
+
+          let action;
+          const actionPayload = {
+            username,
+            pageSize: this.config.pageSize,
+            page: queryParams.page ? +queryParams.page : 1,
+          };
+          if (this.viewMode === 'user') {
+            action = ProfileActions.loadProfileArticles(actionPayload);
+          } else {
+            action = ProfileActions.loadFavoritedArticles(actionPayload);
+          }
+          this.store.dispatch(action);
+        })
     );
 
     this.profile$ = this.store.select(selectCurrentProfile);
