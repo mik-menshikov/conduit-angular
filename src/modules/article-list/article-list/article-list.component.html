@@ -1,11 +1,11 @@
-<ng-container *ngIf="!(loading$ | async) else isLoading">
-	<app-article-list-item *ngFor="let article of articles$ | async" [article]="article"></app-article-list-item>
+<ng-container *ngIf="!loading else isLoading">
+	<app-article-list-item *ngFor="let article of articles" [article]="article"></app-article-list-item>
 </ng-container>
 <ng-template #isLoading>
 	<div>Loading articles...</div>
 </ng-template>
-<ng-container *ngIf="filter$ | async as filter">
-	<ng-container *ngIf="totalPages$ | async as totalPages">
-		<pager [totalPages]="totalPages" [currentPage]="filter.page"></pager>
+<ng-container *ngIf="page">
+	<ng-container *ngIf="totalPages">
+		<pager [totalPages]="totalPages" [currentPage]="page"></pager>
 	</ng-container>
 </ng-container>

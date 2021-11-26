@@ -1,0 +1,60 @@
+<div class="profile-page" *ngIf="profile$ | async as profile">
+
+	<div class="user-info">
+		<div class="container">
+			<div class="row">
+
+				<div class="col-xs-12 col-md-10 offset-md-1">
+					<img [src]="profile.image" class="user-img" />
+					<h4>{{ profile.username }}</h4>
+					<p>
+						{{ profile.bio }}
+					</p>
+					<button class="btn btn-sm btn-outline-secondary action-btn">
+						<i class="ion-plus-round"></i>
+						&nbsp;
+						Follow {{ profile.username }}
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="row">
+
+			<div class="col-xs-12 col-md-10 offset-md-1">
+				<div class="articles-toggle">
+					<ul class="nav nav-pills outline-active">
+						<li class="nav-item">
+							<a class="nav-link" href="#" [ngClass]="{ active: viewMode === 'user' }"
+								[routerLink]="['/profile', profile.username]" [queryParams]="{feed: 'user', page: 1}"
+								(click)="viewMode='user';$event.preventDefault()">My Articles</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" [routerLink]="['/profile', profile.username]"
+								[queryParams]="{feed: 'favorited', page: 1}"
+								[ngClass]="{ active: viewMode === 'favorited' }"
+								(click)="viewMode='favorited';$event.preventDefault()">
+								Favorited Articles
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<article-list *ngIf="viewMode === 'user' && (userArticles$ | async) as userArticles"
+					[articles]="userArticles.entries" [totalPages]="userArticles.totalPages" [page]="userArticles.page"
+					[loading]="false">
+				</article-list>
+				<article-list *ngIf="viewMode === 'favorited' && (favoritedArticles$ | async) as favoritedArticles"
+					[articles]="favoritedArticles.entries" [totalPages]="favoritedArticles.totalPages"
+					[page]="favoritedArticles.page" [loading]="false">
+				</article-list>
+
+			</div>
+
+		</div>
+	</div>
+
+</div>
