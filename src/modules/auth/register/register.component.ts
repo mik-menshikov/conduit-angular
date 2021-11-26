@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { register } from 'src/modules/auth/+state/auth.actions';
+import { register, resetError } from 'src/modules/auth/+state/auth.actions';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
 
 @Component({
@@ -10,11 +10,11 @@ import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registerForm = this.fb.group({
-    username: [''],
-    email: [''],
-    password: [''],
+    username: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   error$: Observable<any>;
@@ -27,5 +27,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.error$ = this.store.select(AuthSelectors.getError);
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(resetError());
   }
 }

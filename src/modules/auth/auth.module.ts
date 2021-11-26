@@ -15,12 +15,14 @@ import { TokenPersistenceService } from 'src/modules/auth/token-persistence.serv
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/modules/auth/token.interceptor';
 import { RegisterComponent } from './register/register.component';
+import { SharedModule } from 'src/modules/shared/shared.module';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: 'login',

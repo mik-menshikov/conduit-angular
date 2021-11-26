@@ -30,6 +30,9 @@ export const registerFailure = createAction(
   '[Auth] register Failure',
   props<{ error: any }>()
 );
+
+export const resetError = createAction('[Auth] Reset Error');
+
 export const getUser = createAction('[Auth] user');
 
 export const getUserSuccess = createAction(

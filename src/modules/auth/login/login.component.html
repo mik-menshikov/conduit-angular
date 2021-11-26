@@ -5,7 +5,7 @@
 				<h1 class="text-xs-center">Sign in</h1>
 				<p class="text-xs-center"> <a routerLink="/register">Don't have an account?</a> </p>
 				<ul class="error-messages" *ngIf="error$ | async as error">
-					<li>{{ error | json }}</li>
+					<li>{{ error | toErrorMessage }}</li>
 				</ul>
 				<form [formGroup]="loginForm" (ngSubmit)="login()">
 					<fieldset class="form-group">

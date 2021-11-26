@@ -40,5 +40,6 @@ export const reducer = createReducer(
   on(AuthActions.loginFailure, (state, action) => ({
     ...state,
     error: action.error,
-  }))
+  })),
+  on(AuthActions.resetError, (state) => ({ ...state, error: null }))
 );
