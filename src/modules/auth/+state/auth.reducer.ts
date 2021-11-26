@@ -5,42 +5,40 @@ import * as AuthActions from './auth.actions';
 export const authFeatureKey = 'auth';
 
 export interface AuthState {
-  [authFeatureKey]: {
-    user: User | null;
-    loading: boolean;
-    loggedIn: boolean;
-  };
+  user: User | null;
+  loading: boolean;
+  loggedIn: boolean;
+  error: any;
 }
 
 export const initialState: AuthState = {
-  [authFeatureKey]: { user: null, loading: false, loggedIn: false },
+  user: null,
+  loading: false,
+  loggedIn: false,
+  error: null,
 };
 
 export const reducer = createReducer(
   initialState,
-  on(AuthActions.login, (state, _) => {
-    const authState = state[authFeatureKey];
-    return { ...state, [authFeatureKey]: { ...authState, loading: true } };
+  on(AuthActions.login, (state) => {
+    return { ...state, loading: true };
   }),
   on(AuthActions.loginSuccess, (state, action) => {
     return {
       ...state,
-      [authFeatureKey]: {
-        user: action.user,
-        loading: false,
-        loggedIn: true,
-      },
+      user: action.user,
+      loading: false,
+      loggedIn: true,
     };
   }),
-  on(AuthActions.getUser, (state, action) => {
-    const authState = state[authFeatureKey];
-    return { ...state, [authFeatureKey]: { ...authState, loading: true } };
+  on(AuthActions.getUser, (state) => {
+    return { ...state, loading: true };
   }),
   on(AuthActions.getUserSuccess, (state, action) => {
-    const authState = state[authFeatureKey];
-    return {
-      ...state,
-      [authFeatureKey]: { ...authState, loading: false, user: action.user },
-    };
-  })
+    return { ...state, loading: false, user: action.user, loggedIn: true };
+  }),
+  on(AuthActions.loginFailure, (state, action) => ({
+    ...state,
+    error: action.error,
+  }))
 );

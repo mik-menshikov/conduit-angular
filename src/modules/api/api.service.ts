@@ -9,6 +9,7 @@ import {
   LoginResponse,
   ChangedArticle,
   TagsResult,
+  NewUser,
 } from 'src/modules/api/interfaces';
 import { Feed } from 'src/modules/article-list/+state/article-list.reducer';
 
@@ -27,6 +28,14 @@ export class ApiService {
     return this.http.post<LoginResponse>(
       `${BASE_URL}/users/login`,
       JSON.stringify(creds),
+      { headers: jsonHeaders }
+    );
+  }
+
+  register(creds: NewUser) {
+    return this.http.post<LoginResponse>(
+      `${BASE_URL}/users`,
+      JSON.stringify({ user: creds }),
       { headers: jsonHeaders }
     );
   }

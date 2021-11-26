@@ -2,9 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { User } from 'src/modules/api/interfaces';
 import * as ArticleListActions from 'src/modules/article-list/+state/article-list.actions';
 import { ArticlesFilter } from 'src/modules/article-list/+state/article-list.reducer';
 import { selectFilter } from 'src/modules/article-list/+state/article-list.selectors';
+import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
 import { ConfigService } from 'src/modules/config/config.service';
 import { loadTags } from 'src/modules/home/+state/home.actions';
 import { selectTags } from 'src/modules/home/+state/home.reducer';
@@ -17,6 +19,7 @@ import { selectTags } from 'src/modules/home/+state/home.reducer';
 export class HomeComponent implements OnInit, OnDestroy {
   tags$: Observable<string[]>;
   filter$: Observable<ArticlesFilter>;
+  loggedIn$: Observable<boolean>;
 
   routeSubscription: Subscription;
 
@@ -29,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.tags$ = this.store.select(selectTags);
     this.filter$ = this.store.select(selectFilter);
+    this.loggedIn$ = this.store.select(AuthSelectors.isLoggedIn);
 
     this.store.dispatch(
       ArticleListActions.loadArticleLists({ pageSize: this.config.pageSize })

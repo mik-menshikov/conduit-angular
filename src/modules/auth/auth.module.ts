@@ -14,9 +14,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { TokenPersistenceService } from 'src/modules/auth/token-persistence.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from 'src/modules/auth/token.interceptor';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, RegisterComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -24,6 +25,10 @@ import { TokenInterceptor } from 'src/modules/auth/token.interceptor';
       {
         path: 'login',
         component: LoginComponent,
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
       },
     ]),
     StoreModule.forFeature(authFeatureKey, reducer, {

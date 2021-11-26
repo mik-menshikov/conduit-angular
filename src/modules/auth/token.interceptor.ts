@@ -13,7 +13,11 @@ import { mergeMap } from 'rxjs/operators';
 export class TokenInterceptor implements HttpInterceptor {
   constructor(private tokenService: TokenPersistenceService) {}
 
-  ignoreRules = [{ method: 'GET', test: /comments$/ }];
+  ignoreRules = [
+    { method: 'GET', test: /comments$/ },
+    { method: 'GET', test: /articles\?/ },
+    { method: 'GET', test: /tags$/ },
+  ];
 
   shouldInterceptRequest(req: HttpRequest<any>) {
     return !this.ignoreRules.find(
