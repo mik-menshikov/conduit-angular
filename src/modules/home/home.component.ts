@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { User } from 'src/modules/api/interfaces';
 import * as ArticleListActions from 'src/modules/article-list/+state/article-list.actions';
 import { ArticlesFilter } from 'src/modules/article-list/+state/article-list.reducer';
 import { selectFilter } from 'src/modules/article-list/+state/article-list.selectors';
