@@ -17,17 +17,16 @@ import { Observable, range } from 'rxjs';
 export class PagerComponent implements OnChanges {
   @Input() currentPage: number;
   @Input() totalPages: number;
-  // @Output() changePage = new EventEmitter();
   pageNumbers: number[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     const { totalPages } = changes;
     if (totalPages && totalPages.currentValue !== totalPages.previousValue) {
-      this.onTotalPagesChange();
+      this.enumeratePages();
     }
   }
 
-  onTotalPagesChange() {
+  enumeratePages() {
     this.pageNumbers = [];
     for (let i = 1; i <= this.totalPages; i++) {
       this.pageNumbers.push(i);

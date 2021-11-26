@@ -34,8 +34,4 @@ export class ArticleListComponent implements OnInit {
     this.loading$ = this.store.select(isLoading);
     this.totalPages$ = this.store.select(selectTotalPages);
   }
-
-  onChangePage(page: number) {
-    this.store.dispatch(loadArticleLists({ pageSize: 4, page }));
-  }
 }
