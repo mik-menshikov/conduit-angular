@@ -40,14 +40,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.tags$ = this.store.select(selectTags);
     this.filter$ = this.store.select(selectFilter);
     this.loggedIn$ = this.store.select(AuthSelectors.isLoggedIn);
-<<<<<<< HEAD
 
     this.articles$ = this.store.select(selectArticles);
     this.filter$ = this.store.select(selectFilter);
     this.loading$ = this.store.select(selectLoading);
     this.totalPages$ = this.store.select(selectTotalPages);
-=======
->>>>>>> main
 
     this.store.dispatch(
       HomeActions.loadArticleLists({ pageSize: this.config.pageSize })
