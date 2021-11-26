@@ -11,6 +11,12 @@ export interface User extends Pick<Profile, 'username' | 'bio' | 'image'> {
   token: string;
 }
 
+export interface NewUser {
+  username: string;
+  email: string;
+  password: string;
+}
+
 export interface Article {
   slug: string;
   title: string;
@@ -63,6 +69,10 @@ export interface LoginRequest {
     email: string;
     password: string;
   };
+}
+
+export interface RegisterRequest {
+  user: NewUser;
 }
 
 export interface LoginResponse {

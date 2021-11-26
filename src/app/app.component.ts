@@ -30,7 +30,9 @@ export class AppComponent implements OnInit {
         take(1),
         filter((token) => !!token)
       )
-      .subscribe(() => this.store.dispatch(getUser()));
+      .subscribe({
+        next: () => this.store.dispatch(getUser()),
+      });
 
     this.user$ = this.store.select(AuthSelectors.getUser);
     this.isLoggedIn$ = this.store.select(AuthSelectors.isLoggedIn);

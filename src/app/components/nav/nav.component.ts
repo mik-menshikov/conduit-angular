@@ -8,5 +8,5 @@ import { User } from 'src/modules/api/interfaces';
 })
 export class NavComponent {
   @Input() user: User | null = null;
-  @Input() isLoggedIn: boolean;
+  @Input() isLoggedIn: boolean | null;
 }

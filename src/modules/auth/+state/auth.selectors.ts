@@ -8,15 +8,15 @@ const getAuth = createFeatureSelector<AuthState>(authFeatureKey);
 
 const isLoggedIn = createSelector(
   getAuth,
-  (state: AuthState) => state[authFeatureKey].loggedIn
+  (state: AuthState) => state.loggedIn
 );
 
-const getUser = createSelector(
-  getAuth,
-  (state: AuthState) => state[authFeatureKey].user
-);
+const getUser = createSelector(getAuth, (state: AuthState) => state.user);
+
+const getError = createSelector(getAuth, (state) => state.error);
 
 export const AuthSelectors = {
   isLoggedIn,
   getUser,
+  getError,
 };

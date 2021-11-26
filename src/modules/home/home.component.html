@@ -11,8 +11,9 @@
 				<div class="feed-toggle">
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
-							<a class="nav-link" [ngClass]="{active: filter.feed === 'user'}" [routerLink]=""
-								[queryParams]="{ feed: 'user', page: 1}">
+							<a class="nav-link"
+								[ngClass]="{active: filter.feed === 'user', disabled: !(loggedIn$ | async)}"
+								[routerLink]="" [queryParams]="{ feed: 'user', page: 1}">
 								Your Feed
 							</a>
 						</li>

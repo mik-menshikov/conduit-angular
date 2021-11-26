@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { switchMap, map, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
 import { TokenPersistenceService } from 'src/modules/auth/token-persistence.service';
 import * as AuthActions from './auth.actions';
@@ -19,9 +20,12 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.login),
       switchMap((action) =>
-        this.apiService
-          .login(action.data)
-          .pipe(map((results) => AuthActions.loginSuccess(results)))
+        this.apiService.login(action.data).pipe(
+          map((results) => AuthActions.loginSuccess(results)),
+          catchError((err) =>
+            of(AuthActions.loginFailure({ error: err.error.errors }))
+          )
+        )
       )
     )
   );
@@ -36,6 +40,20 @@ export class AuthEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.register),
+      switchMap((action) =>
+        this.apiService.register(action.user).pipe(
+          map((results) => AuthActions.loginSuccess(results)),
+          catchError((err) =>
+            of(AuthActions.loginFailure({ error: err.error.errors }))
+          )
+        )
+      )
+    )
   );
 
   getUser$ = createEffect(() =>
