@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 import { User } from 'src/modules/api/interfaces';
 import { getUser } from 'src/modules/auth/+state/auth.actions';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';

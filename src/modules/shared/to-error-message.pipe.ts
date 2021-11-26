@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { isObject } from 'lodash';
+import isObject from 'lodash/isObject';
 
 @Pipe({
   name: 'toErrorMessage',
