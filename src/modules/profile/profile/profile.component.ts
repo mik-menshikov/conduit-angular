@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userArticles$: Observable<ArticleListState | undefined>;
   favoritedArticles$: Observable<ArticleListState | undefined>;
 
-  viewMode: ArticlesViewMode = 'user';
+  listViewMode: ArticlesViewMode = 'user';
 
   subscription = new Subscription();
 
@@ -44,8 +44,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.route.queryParams
         .pipe(withLatestFrom(this.route.url))
         .subscribe(([queryParams, url]) => {
-          this.viewMode =
-            url[1] && url[1].path === 'favorites' ? 'favorited' : 'user';
+          const [, pathSegment] = url;
+          this.listViewMode =
+            pathSegment && pathSegment.path === 'favorites'
+              ? 'favorited'
+              : 'user';
 
           let action;
           const actionPayload = {
@@ -53,7 +56,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             pageSize: this.config.pageSize,
             page: queryParams.page ? +queryParams.page : 1,
           };
-          if (this.viewMode === 'user') {
+          if (this.listViewMode === 'user') {
             action = ProfileActions.loadProfileArticles(actionPayload);
           } else {
             action = ProfileActions.loadFavoritedArticles(actionPayload);

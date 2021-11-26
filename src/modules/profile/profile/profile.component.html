@@ -28,25 +28,25 @@
 				<div class="articles-toggle">
 					<ul class="nav nav-pills outline-active">
 						<li class="nav-item">
-							<a class="nav-link" href="#" [ngClass]="{ active: viewMode === 'user' }"
+							<a class="nav-link" href="#" [ngClass]="{ active: listViewMode === 'user' }"
 								[routerLink]="['/profile', profile.username]">
 								My Articles
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" [routerLink]="['/profile', profile.username, 'favorites']"
-								[ngClass]="{ active: viewMode === 'favorited' }">
+								[ngClass]="{ active: listViewMode === 'favorited' }">
 								Favorited Articles
 							</a>
 						</li>
 					</ul>
 				</div>
 
-				<article-list *ngIf="viewMode === 'user' && (userArticles$ | async) as userArticles"
+				<article-list *ngIf="listViewMode === 'user' && (userArticles$ | async) as userArticles"
 					[articles]="userArticles.entries" [totalPages]="userArticles.totalPages" [page]="userArticles.page"
 					[loading]="false">
 				</article-list>
-				<article-list *ngIf="viewMode === 'favorited' && (favoritedArticles$ | async) as favoritedArticles"
+				<article-list *ngIf="listViewMode === 'favorited' && (favoritedArticles$ | async) as favoritedArticles"
 					[articles]="favoritedArticles.entries" [totalPages]="favoritedArticles.totalPages"
 					[page]="favoritedArticles.page" [loading]="false">
 				</article-list>
