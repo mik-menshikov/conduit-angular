@@ -10,10 +10,12 @@ import {
   postComment,
   postCommentSuccess,
   removeComment,
+  toggleFollowUser,
 } from 'src/modules/article/+state/article.actions';
 import { ArticleSelectors } from 'src/modules/article/+state/article.selectors';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
 import { CommentEditorComponent } from 'src/modules/comment/comment-editor/comment-editor.component';
+import * as ProfileActions from 'src/modules/profile/+state/profile.actions';
 
 @Component({
   selector: 'app-article',
@@ -67,6 +69,10 @@ export class ArticleComponent implements OnInit, OnDestroy {
 
   removeComment(slug: string, id: number) {
     this.store.dispatch(removeComment({ slug, id }));
+  }
+
+  toggleFollow(username: string) {
+    this.store.dispatch(toggleFollowUser({ username }));
   }
 
   ngOnDestroy(): void {

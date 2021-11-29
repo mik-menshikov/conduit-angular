@@ -28,8 +28,7 @@ export const profileFeature = createFeature({
     initialState,
     on(
       ProfileActions.loadProfileSuccess,
-      ProfileActions.followUserSuccess,
-      ProfileActions.unfollowUserSuccess,
+      ProfileActions.toggleFollowUserSuccess,
       (state, action) => ({
         ...state,
         currentProfile: action.profile,

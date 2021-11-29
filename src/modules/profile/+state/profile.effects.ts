@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { iif } from 'rxjs';
 import { concatMap, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
+import { selectCurrentProfile } from 'src/modules/profile/+state/profile.reducer';
 import * as ProfileActions from './profile.actions';
 
 @Injectable()
 export class ProfileEffects {
-  constructor(private actions$: Actions, private apiService: ApiService) {}
+  constructor(
+    private actions$: Actions,
+    private apiService: ApiService,
+    private store: Store
+  ) {}
 
   loadProfile$ = createEffect(() =>
     this.actions$.pipe(
@@ -69,19 +76,16 @@ export class ProfileEffects {
     )
   );
 
-  followUser$ = createEffect(() =>
+  toggleFollowUser$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProfileActions.followUser),
-      exhaustMap((action) => this.apiService.followUser(action.username)),
-      map((result) => ProfileActions.followUserSuccess(result))
-    )
-  );
-
-  unfollowUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ProfileActions.unfollowUser),
-      exhaustMap((action) => this.apiService.unfollowUser(action.username)),
-      map((result) => ProfileActions.unfollowUserSuccess(result))
+      ofType(ProfileActions.toggleFollowUser),
+      concatLatestFrom(() => this.store.select(selectCurrentProfile)),
+      exhaustMap(([action, profile]) => {
+        return profile?.following
+          ? this.apiService.unfollowUser(action.username)
+          : this.apiService.followUser(action.username);
+      }),
+      map((result) => ProfileActions.toggleFollowUserSuccess(result))
     )
   );
 }

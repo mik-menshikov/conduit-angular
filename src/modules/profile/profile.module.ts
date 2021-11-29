@@ -7,6 +7,7 @@ import { ProfileEffects } from './+state/profile.effects';
 import { StoreModule } from '@ngrx/store';
 import { profileFeature } from 'src/modules/profile/+state/profile.reducer';
 import { ArticleListModule } from 'src/modules/article-list/article-list.module';
+import { SharedModule } from 'src/modules/shared/shared.module';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -25,6 +26,7 @@ import { ArticleListModule } from 'src/modules/article-list/article-list.module'
     ]),
     StoreModule.forFeature(profileFeature),
     EffectsModule.forFeature([ProfileEffects]),
+    SharedModule,
   ],
 })
 export class ProfileModule {}

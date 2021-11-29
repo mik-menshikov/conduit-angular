@@ -139,6 +139,20 @@ export class ApiService {
     );
   }
 
+  favoriteArticle(slug: string) {
+    return this.http.post<ArticleResult>(
+      `${BASE_URL}/articles/${slug}/favorite`,
+      { headers: jsonHeaders }
+    );
+  }
+
+  unfavoriteArticle(slug: string) {
+    return this.http.delete<ArticleResult>(
+      `${BASE_URL}/articles/${slug}/favorite`,
+      { headers: jsonHeaders }
+    );
+  }
+
   loadComments(slug: string) {
     return this.http.get<CommentsResult>(
       `${BASE_URL}/articles/${slug}/comments`

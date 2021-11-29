@@ -17,7 +17,8 @@
 			<hr />
 			<div class="article-actions">
 				<app-article-actions [createdAt]="article.createdAt" [user]="article.author"
-					[favoritesCount]="article.favoritesCount" [articleSlug]="article.slug"></app-article-actions>
+					[favoritesCount]="article.favoritesCount" [articleSlug]="article.slug"
+					(followUser)="toggleFollow($event)"></app-article-actions>
 			</div>
 
 			<div class="row">

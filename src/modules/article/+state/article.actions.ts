@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Article, Comment } from 'src/modules/api/interfaces';
+import { Article, Comment, Profile } from 'src/modules/api/interfaces';
 
 export const loadArticle = createAction(
   '[Article] Load Article',
@@ -59,4 +59,14 @@ export const removeCommentSuccess = createAction(
 export const removeCommentFailure = createAction(
   '[Article] Remove Comment Failure',
   props<{ error: any }>()
+);
+
+export const toggleFollowUser = createAction(
+  '[Article] Toggle Follow User',
+  props<{ username: string }>()
+);
+
+export const toggleFollowUserSuccess = createAction(
+  '[Article] Toggle Follow User Success',
+  props<{ profile: Profile }>()
 );
