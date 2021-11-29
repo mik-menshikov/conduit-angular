@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import * as HomeActions from './+state/home.actions';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
 import { ConfigService } from 'src/modules/config/config.service';
@@ -14,6 +14,7 @@ import {
   selectTotalPages,
 } from 'src/modules/home/+state/home.reducer';
 import { Article } from 'src/modules/api/interfaces';
+import { auditTime, delay, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -43,7 +44,12 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.articles$ = this.store.select(selectArticles);
     this.filter$ = this.store.select(selectFilter);
-    this.loading$ = this.store.select(selectLoading);
+    // show loading indicator only when the req lasts more than 500 ms
+    // and show it for not less than 300 ms to avoid flickering effect
+    this.loading$ = this.store.select(selectLoading).pipe(
+      auditTime(500),
+      switchMap((val) => (!val ? of(val).pipe(delay(300)) : of(val)))
+    );
     this.totalPages$ = this.store.select(selectTotalPages);
 
     this.store.dispatch(

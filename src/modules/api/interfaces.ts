@@ -10,6 +10,10 @@ export interface User extends Pick<Profile, 'username' | 'bio' | 'image'> {
   token: string;
 }
 
+export interface ChangedUser extends Omit<User, 'token'> {
+  password: string;
+}
+
 export interface NewUser {
   username: string;
   email: string;

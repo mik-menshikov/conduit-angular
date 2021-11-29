@@ -11,6 +11,7 @@ import {
   TagsResult,
   NewUser,
   ProfileResponse,
+  ChangedUser,
 } from 'src/modules/api/interfaces';
 import { Feed } from 'src/modules/home/+state/home.reducer';
 
@@ -45,6 +46,16 @@ export class ApiService {
     return this.http.get<LoginResponse>(`${BASE_URL}/user`, {
       headers: jsonHeaders,
     });
+  }
+
+  updateUser(user: ChangedUser) {
+    return this.http.put<LoginResponse>(
+      `${BASE_URL}/user`,
+      JSON.stringify({ user }),
+      {
+        headers: jsonHeaders,
+      }
+    );
   }
 
   loadProfile(username: string) {
