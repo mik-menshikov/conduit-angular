@@ -19,6 +19,11 @@ const routes: Routes = [
         (m) => m.ArticleEditorModule
       ),
   },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('src/modules/profile/profile.module').then((m) => m.ProfileModule),
+  },
 ];
 
 @NgModule({

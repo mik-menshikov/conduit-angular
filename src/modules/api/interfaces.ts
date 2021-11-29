@@ -3,7 +3,6 @@ export interface Profile {
   bio: string;
   image: string;
   following: boolean;
-  loading: boolean;
 }
 
 export interface User extends Pick<Profile, 'username' | 'bio' | 'image'> {
@@ -77,4 +76,8 @@ export interface RegisterRequest {
 
 export interface LoginResponse {
   user: User;
+}
+
+export interface ProfileResponse {
+  profile: Profile;
 }

@@ -10,8 +10,9 @@ import {
   ChangedArticle,
   TagsResult,
   NewUser,
+  ProfileResponse,
 } from 'src/modules/api/interfaces';
-import { Feed } from 'src/modules/article-list/+state/article-list.reducer';
+import { Feed } from 'src/modules/home/+state/home.reducer';
 
 const BASE_URL = 'http://localhost:3000/api';
 
@@ -46,18 +47,32 @@ export class ApiService {
     });
   }
 
+  loadProfile(username: string) {
+    return this.http.get<ProfileResponse>(`${BASE_URL}/profiles/${username}`, {
+      headers: jsonHeaders,
+    });
+  }
+
   loadArticles(
     pageSize: number,
     page?: number,
     tag?: string,
+    author?: string,
+    favorited?: string,
     feed: Feed = 'all'
   ) {
     const params = [['limit', `${pageSize}`]];
     params.push(['offset', `${page ? (page - 1) * pageSize : 0}`]);
 
-    if (tag) {
-      params.push(['tag', tag]);
-    }
+    const addOptionalParam = (name: string, value?: string) => {
+      if (value) {
+        params.push([name, value]);
+      }
+    };
+
+    addOptionalParam('tag', tag);
+    addOptionalParam('author', author);
+    addOptionalParam('favorited', favorited);
 
     const searchParams = new URLSearchParams(params);
     if (feed === 'all') {
