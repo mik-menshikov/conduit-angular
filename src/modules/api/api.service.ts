@@ -64,6 +64,24 @@ export class ApiService {
     });
   }
 
+  followUser(username: string) {
+    return this.http.post<ProfileResponse>(
+      `${BASE_URL}/profiles/${username}/follow`,
+      {
+        headers: jsonHeaders,
+      }
+    );
+  }
+
+  unfollowUser(username: string) {
+    return this.http.delete<ProfileResponse>(
+      `${BASE_URL}/profiles/${username}/follow`,
+      {
+        headers: jsonHeaders,
+      }
+    );
+  }
+
   loadArticles(
     pageSize: number,
     page?: number,

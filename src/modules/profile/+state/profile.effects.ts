@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, switchMap } from 'rxjs/operators';
+import { concatMap, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
 import * as ProfileActions from './profile.actions';
 
@@ -66,6 +66,22 @@ export class ProfileEffects {
             })
           )
       )
+    )
+  );
+
+  followUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.followUser),
+      exhaustMap((action) => this.apiService.followUser(action.username)),
+      map((result) => ProfileActions.followUserSuccess(result))
+    )
+  );
+
+  unfollowUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.unfollowUser),
+      exhaustMap((action) => this.apiService.unfollowUser(action.username)),
+      map((result) => ProfileActions.unfollowUserSuccess(result))
     )
   );
 }
