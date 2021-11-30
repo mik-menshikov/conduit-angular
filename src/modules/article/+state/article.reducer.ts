@@ -44,5 +44,12 @@ export const reducer = createReducer(
         (comment) => comment.id !== action.id
       ),
     };
+  }),
+  on(ArticleActions.toggleFollowUserSuccess, (state, action) => {
+    const article = {
+      ...state.currentArticle,
+      author: action.profile,
+    } as Article;
+    return { ...state, currentArticle: article };
   })
 );

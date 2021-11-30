@@ -64,6 +64,24 @@ export class ApiService {
     });
   }
 
+  followUser(username: string) {
+    return this.http.post<ProfileResponse>(
+      `${BASE_URL}/profiles/${username}/follow`,
+      {
+        headers: jsonHeaders,
+      }
+    );
+  }
+
+  unfollowUser(username: string) {
+    return this.http.delete<ProfileResponse>(
+      `${BASE_URL}/profiles/${username}/follow`,
+      {
+        headers: jsonHeaders,
+      }
+    );
+  }
+
   loadArticles(
     pageSize: number,
     page?: number,
@@ -117,6 +135,20 @@ export class ApiService {
     return this.http.put<ArticleResult>(
       `${BASE_URL}/articles/${slug}`,
       JSON.stringify({ article }),
+      { headers: jsonHeaders }
+    );
+  }
+
+  favoriteArticle(slug: string) {
+    return this.http.post<ArticleResult>(
+      `${BASE_URL}/articles/${slug}/favorite`,
+      { headers: jsonHeaders }
+    );
+  }
+
+  unfavoriteArticle(slug: string) {
+    return this.http.delete<ArticleResult>(
+      `${BASE_URL}/articles/${slug}/favorite`,
       { headers: jsonHeaders }
     );
   }

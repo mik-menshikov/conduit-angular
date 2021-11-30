@@ -52,3 +52,13 @@ export const loadProfileArticlesFailure = createAction(
   '[Profile] Load Profile Articles Failure',
   props<{ error: any }>()
 );
+
+export const toggleFollowUser = createAction(
+  '[Profile] Toggle Follow User',
+  props<{ username: string }>()
+);
+
+export const toggleFollowUserSuccess = createAction(
+  '[Profile] Toggle Follow User Success',
+  props<{ profile: Profile }>()
+);

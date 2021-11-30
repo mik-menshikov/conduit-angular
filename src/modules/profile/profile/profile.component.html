@@ -10,11 +10,15 @@
 					<p>
 						{{ profile.bio }}
 					</p>
-					<button class="btn btn-sm btn-outline-secondary action-btn">
+
+					<follow-button [username]="profile.username" [following]="profile.following"
+						(toggleFollow)="toggleFollow($event)"></follow-button>
+					<!-- <button class="btn btn-sm btn-outline-secondary action-btn"
+						(click)="toggleFollow(profile.username)">
 						<i class="ion-plus-round"></i>
 						&nbsp;
-						Follow {{ profile.username }}
-					</button>
+						{{ profile.following ? 'Unfollow' : 'Follow'}} {{ profile.username }}
+					</button> -->
 				</div>
 
 			</div>

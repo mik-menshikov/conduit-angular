@@ -1,0 +1,5 @@
+<button class="btn btn-sm btn-outline-secondary action-btn" (click)="toggleFollow.emit(username)">
+	<i class="ion-plus-round"></i>
+	&nbsp;
+	{{ following ? 'Unfollow' : 'Follow'}} {{ username }}
+</button>

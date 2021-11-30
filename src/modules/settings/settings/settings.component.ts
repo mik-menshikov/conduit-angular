@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { delay, pluck, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { User } from 'src/modules/api/interfaces';
 import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
 import { updateUser } from 'src/modules/settings/+state/settings.actions';

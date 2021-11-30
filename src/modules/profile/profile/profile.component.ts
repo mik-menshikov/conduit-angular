@@ -70,6 +70,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.favoritedArticles$ = this.store.select(selectFavoritedArticles);
   }
 
+  toggleFollow(username: string) {
+    this.store.dispatch(ProfileActions.toggleFollowUser({ username }));
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

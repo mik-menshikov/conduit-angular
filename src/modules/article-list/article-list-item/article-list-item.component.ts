@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Article } from 'src/modules/api/interfaces';
 
 @Component({
@@ -8,4 +8,6 @@ import { Article } from 'src/modules/api/interfaces';
 })
 export class ArticleListItemComponent {
   @Input() article!: Article;
+
+  @Output() onToggleFavorite = new EventEmitter<string>();
 }

@@ -1,19 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import {
   switchMap,
   map,
   concatMap,
   withLatestFrom,
   mergeMap,
+  exhaustMap,
 } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
+import { ArticleSelectors } from 'src/modules/article/+state/article.selectors';
+import { AuthSelectors } from 'src/modules/auth/+state/auth.selectors';
 
 import * as ArticleActions from './article.actions';
 
 @Injectable()
 export class ArticleEffects {
-  constructor(private actions$: Actions, private apiService: ApiService) {}
+  constructor(
+    private actions$: Actions,
+    private apiService: ApiService,
+    private store: Store
+  ) {}
 
   loadArticle$ = createEffect(() => {
     const loadAction$ = this.actions$.pipe(ofType(ArticleActions.loadArticle));
@@ -68,6 +76,19 @@ export class ArticleEffects {
             map(() => ArticleActions.removeCommentSuccess({ id: action.id }))
           )
       )
+    )
+  );
+
+  toggleFollowUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ArticleActions.toggleFollowUser),
+      concatLatestFrom(() => this.store.select(ArticleSelectors.getArticle)),
+      exhaustMap(([action, article]) => {
+        return article?.author.following
+          ? this.apiService.unfollowUser(action.username)
+          : this.apiService.followUser(action.username);
+      }),
+      map((result) => ArticleActions.toggleFollowUserSuccess(result))
     )
   );
 }

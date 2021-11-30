@@ -12,6 +12,7 @@ import {
 import { reducer } from 'src/modules/article/+state/article.reducer';
 import { ArticleActionsComponent } from './article-actions/article-actions.component';
 import { CommentModule } from 'src/modules/comment/comment.module';
+import { SharedModule } from 'src/modules/shared/shared.module';
 
 @NgModule({
   declarations: [ArticleComponent, ArticleActionsComponent],
@@ -26,6 +27,7 @@ import { CommentModule } from 'src/modules/comment/comment.module';
     ]),
     StoreModule.forFeature(articleFeatureKey, reducer, { initialState }),
     EffectsModule.forFeature([ArticleEffects]),
+    SharedModule,
   ],
 })
 export class ArticleModule {}

@@ -26,10 +26,14 @@ export const profileFeature = createFeature({
   name: 'profile',
   reducer: createReducer(
     initialState,
-    on(ProfileActions.loadProfileSuccess, (state, action) => ({
-      ...state,
-      currentProfile: action.profile,
-    })),
+    on(
+      ProfileActions.loadProfileSuccess,
+      ProfileActions.toggleFollowUserSuccess,
+      (state, action) => ({
+        ...state,
+        currentProfile: action.profile,
+      })
+    ),
     on(ProfileActions.loadProfileArticlesSuccess, (state, action) => ({
       ...state,
       userArticles: {
