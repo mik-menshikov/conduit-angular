@@ -97,14 +97,11 @@ export class ProfileEffects {
       ofType(ProfileActions.toggleFavorite),
       concatLatestFrom(() => this.store.select(selectFavoritedArticles)),
       exhaustMap(([action, articleState]) => {
-        console.log(action, articleState);
-
-        if (!articleState) return throwError('Article not found in the store');
+        if (!articleState) return throwError('Store is in a invalid state');
 
         const foundArticle = articleState.entries.find(
           (article) => article.slug === action.slug
         );
-        console.log(foundArticle);
 
         if (!foundArticle) return throwError('Article not found in the store');
 
