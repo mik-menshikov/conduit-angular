@@ -13,12 +13,6 @@
 
 					<follow-button [username]="profile.username" [following]="profile.following"
 						(toggleFollow)="toggleFollow($event)"></follow-button>
-					<!-- <button class="btn btn-sm btn-outline-secondary action-btn"
-						(click)="toggleFollow(profile.username)">
-						<i class="ion-plus-round"></i>
-						&nbsp;
-						{{ profile.following ? 'Unfollow' : 'Follow'}} {{ profile.username }}
-					</button> -->
 				</div>
 
 			</div>
@@ -52,7 +46,7 @@
 				</article-list>
 				<article-list *ngIf="listViewMode === 'favorited' && (favoritedArticles$ | async) as favoritedArticles"
 					[articles]="favoritedArticles.entries" [totalPages]="favoritedArticles.totalPages"
-					[page]="favoritedArticles.page" [loading]="false">
+					[page]="favoritedArticles.page" [loading]="false" (onToggleFavorite)="toggleFavorite($event)">
 				</article-list>
 
 			</div>

@@ -15,6 +15,7 @@ import {
 } from 'src/modules/home/+state/home.reducer';
 import { Article } from 'src/modules/api/interfaces';
 import { auditTime, delay, switchMap } from 'rxjs/operators';
+import { toggleFavorite } from './+state/home.actions';
 
 @Component({
   selector: 'app-home',
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.articles$ = this.store.select(selectArticles);
     this.filter$ = this.store.select(selectFilter);
+
     // show loading indicator only when the req lasts more than 500 ms
     // and show it for not less than 300 ms to avoid flickering effect
     this.loading$ = this.store.select(selectLoading).pipe(
@@ -68,6 +70,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       );
     });
+  }
+
+  toggleFavorite(slug: string) {
+    this.store.dispatch(toggleFavorite({ slug }));
   }
 
   ngOnDestroy(): void {

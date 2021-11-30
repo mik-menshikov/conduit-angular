@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { iif } from 'rxjs';
+import { iif, throwError } from 'rxjs';
 import { concatMap, exhaustMap, map, switchMap } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
-import { selectCurrentProfile } from 'src/modules/profile/+state/profile.reducer';
+import {
+  selectCurrentProfile,
+  selectFavoritedArticles,
+} from 'src/modules/profile/+state/profile.reducer';
 import * as ProfileActions from './profile.actions';
 
 @Injectable()
@@ -86,6 +89,27 @@ export class ProfileEffects {
           : this.apiService.followUser(action.username);
       }),
       map((result) => ProfileActions.toggleFollowUserSuccess(result))
+    )
+  );
+
+  toggleFavorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.toggleFavorite),
+      concatLatestFrom(() => this.store.select(selectFavoritedArticles)),
+      exhaustMap(([action, articleState]) => {
+        if (!articleState) return throwError('Store is in a invalid state');
+
+        const foundArticle = articleState.entries.find(
+          (article) => article.slug === action.slug
+        );
+
+        if (!foundArticle) return throwError('Article not found in the store');
+
+        return foundArticle.favorited
+          ? this.apiService.unfavoriteArticle(action.slug)
+          : this.apiService.favoriteArticle(action.slug);
+      }),
+      map((result) => ProfileActions.toggleFavoriteSuccess(result))
     )
   );
 }

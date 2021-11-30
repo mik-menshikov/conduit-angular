@@ -33,3 +33,13 @@ export const loadArticleListsFailure = createAction(
   '[Home] Load ArticleLists Failure',
   props<{ error: any }>()
 );
+
+export const toggleFavorite = createAction(
+  '[Home] Toggle Favorite',
+  props<{ slug: string }>()
+);
+
+export const toggleFavoriteSuccess = createAction(
+  '[Home] Toggle Favorite Success',
+  props<{ article: Article }>()
+);

@@ -60,6 +60,14 @@ export const homeFeature = createFeature({
         totalPages: action.totalPages,
         loading: false,
       };
+    }),
+    on(HomeActions.toggleFavoriteSuccess, (state, action) => {
+      const index = state.articles.findIndex(
+        (article) => article.slug === action.article.slug
+      );
+      const changedArticles = [...state.articles];
+      changedArticles.splice(index, 1, action.article);
+      return { ...state, articles: changedArticles };
     })
   ),
 });

@@ -26,7 +26,8 @@
 					</ul>
 				</div>
 				<article-list [articles]="articles$ | async" [loading]="loading$ | async"
-					[totalPages]="totalPages$ | async" [page]="(filter$ | async)?.page"></article-list>
+					[totalPages]="totalPages$ | async" [page]="(filter$ | async)?.page"
+					(onToggleFavorite)="toggleFavorite($event)"></article-list>
 			</div>
 			<div class="col-md-3">
 				<div class="sidebar">
