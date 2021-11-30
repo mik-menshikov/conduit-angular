@@ -49,7 +49,19 @@ export const profileFeature = createFeature({
         page: action.page,
         totalPages: action.totalPages,
       },
-    }))
+    })),
+    on(ProfileActions.toggleFavoriteSuccess, (state, action) => {
+      const changedArticles = (state.favoritedArticles?.entries ?? []).filter(
+        (article) => article.slug !== action.article.slug
+      );
+      const changedFavorited: ArticleListState = {
+        ...state.favoritedArticles,
+        totalPages: state.favoritedArticles?.totalPages ?? 1,
+        page: state.favoritedArticles?.page ?? 1,
+        entries: changedArticles,
+      };
+      return { ...state, favoritedArticles: changedFavorited };
+    })
   ),
 });
 

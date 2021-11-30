@@ -62,3 +62,13 @@ export const toggleFollowUserSuccess = createAction(
   '[Profile] Toggle Follow User Success',
   props<{ profile: Profile }>()
 );
+
+export const toggleFavorite = createAction(
+  '[Profile] Toggle Favorite',
+  props<{ slug: string }>()
+);
+
+export const toggleFavoriteSuccess = createAction(
+  '[Profile] Toggle Favorite Success',
+  props<{ article: Article }>()
+);

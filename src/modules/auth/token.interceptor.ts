@@ -15,7 +15,6 @@ export class TokenInterceptor implements HttpInterceptor {
 
   ignoreRules = [
     { method: 'GET', test: /comments$/ },
-    { method: 'GET', test: /articles\?/ },
     { method: 'GET', test: /tags$/ },
   ];
 

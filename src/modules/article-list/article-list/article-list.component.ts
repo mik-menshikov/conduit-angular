@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Article } from 'src/modules/api/interfaces';
 import { ArticlesFilter } from 'src/modules/home/+state/home.reducer';
@@ -14,9 +14,5 @@ export class ArticleListComponent {
   @Input() page: number | undefined = 1;
   @Input() totalPages: number | null = 1;
 
-  constructor(private store: Store) {}
-
-  toggleFavorite(slug: string) {
-    console.log(slug);
-  }
+  @Output() onToggleFavorite = new EventEmitter<string>();
 }
