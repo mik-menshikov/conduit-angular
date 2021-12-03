@@ -153,6 +153,12 @@ export class ApiService {
     );
   }
 
+  removeArticle(slug: string) {
+    return this.http.delete<ArticleResult>(`${BASE_URL}/articles/${slug}`, {
+      headers: jsonHeaders,
+    });
+  }
+
   loadComments(slug: string) {
     return this.http.get<CommentsResult>(
       `${BASE_URL}/articles/${slug}/comments`

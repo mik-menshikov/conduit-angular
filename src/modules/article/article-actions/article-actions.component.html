@@ -4,6 +4,21 @@
 		<a [routerLink]="['/profile', user.username]" class="author">{{ user.username }}</a>
 		<span class="date">{{ createdAt | date }}</span>
 	</div>
+
+	<ng-container *ngIf="isAuthorActions else publicActions">
+		<button class="btn btn-outline-secondary btn-sm" (click)="editArticle.emit(articleSlug)">
+			<i class="ion-edit"></i>
+			Edit article
+		</button>
+		&nbsp;
+		<button class="btn btn-outline-danger btn-sm" (click)="removeArticle.emit(articleSlug)">
+			<i class="ion-trash-a"></i>
+			Delete article
+		</button>
+	</ng-container>
+</div>
+
+<ng-template #publicActions>
 	<follow-button [username]="user.username" [following]="user.following" (toggleFollow)="onFollow()"></follow-button>
 	&nbsp;&nbsp;
 	<button class="btn btn-sm btn-outline-primary" (click)="onFavorite()">
@@ -11,4 +26,4 @@
 		&nbsp;
 		Favorite Post <span class="counter" *ngIf="favoritesCount">({{ favoritesCount }})</span>
 	</button>
-</div>
+</ng-template>
