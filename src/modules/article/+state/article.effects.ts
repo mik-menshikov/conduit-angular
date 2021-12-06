@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import {
@@ -8,6 +9,7 @@ import {
   withLatestFrom,
   mergeMap,
   exhaustMap,
+  tap,
 } from 'rxjs/operators';
 import { ApiService } from 'src/modules/api/api.service';
 import { ArticleSelectors } from 'src/modules/article/+state/article.selectors';
@@ -20,7 +22,8 @@ export class ArticleEffects {
   constructor(
     private actions$: Actions,
     private apiService: ApiService,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {}
 
   loadArticle$ = createEffect(() => {
@@ -35,6 +38,18 @@ export class ArticleEffects {
       ])
     );
   });
+
+  removeArticle$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(ArticleActions.removeArticle),
+        switchMap((action) => this.apiService.removeArticle(action.slug)),
+        tap(() => {
+          this.router.navigateByUrl('/');
+        })
+      ),
+    { dispatch: false }
+  );
 
   loadComments$ = createEffect(() =>
     this.actions$.pipe(

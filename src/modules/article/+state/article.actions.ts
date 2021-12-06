@@ -16,6 +16,20 @@ export const loadArticleFailure = createAction(
   props<{ error: any }>()
 );
 
+export const removeArticle = createAction(
+  '[Article] Remove Article',
+  props<{ slug: string }>()
+);
+
+export const removeArticleSuccess = createAction(
+  '[Article] Remove Article Success'
+);
+
+export const removeArticleFailure = createAction(
+  '[Article] Remove Article Failure',
+  props<{ error: any }>()
+);
+
 export const loadComments = createAction(
   '[Article] Load Comments',
   props<{ slug: string }>()

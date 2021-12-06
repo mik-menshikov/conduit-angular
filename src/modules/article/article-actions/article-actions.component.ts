@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Profile } from 'src/modules/api/interfaces';
 
 @Component({
@@ -7,6 +7,8 @@ import { Profile } from 'src/modules/api/interfaces';
   styleUrls: ['./article-actions.component.scss'],
 })
 export class ArticleActionsComponent {
+  @Input() isAuthorActions: boolean;
+
   @Input() user: Profile;
   @Input() articleSlug: string;
   @Input() createdAt: string;
@@ -14,6 +16,9 @@ export class ArticleActionsComponent {
 
   @Output() favorite = new EventEmitter<string>();
   @Output() followUser = new EventEmitter<string>();
+
+  @Output() editArticle = new EventEmitter<string>();
+  @Output() removeArticle = new EventEmitter<string>();
 
   onFavorite() {
     this.favorite.emit(this.articleSlug);

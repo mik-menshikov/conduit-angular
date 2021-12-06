@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ofType } from '@ngrx/effects';
 import { Store, ActionsSubject } from '@ngrx/store';
 import { Observable, of, Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import {
   loadArticle,
   postComment,
   postCommentSuccess,
+  removeArticle,
   removeComment,
   toggleFollowUser,
 } from 'src/modules/article/+state/article.actions';
@@ -35,6 +36,7 @@ export class ArticleComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store,
     private route: ActivatedRoute,
+    private router: Router,
     private actionsSubj: ActionsSubject
   ) {}
 
@@ -61,6 +63,14 @@ export class ArticleComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.editorComponent.reset();
       });
+  }
+
+  navigateToEditor(slug: string) {
+    this.router.navigateByUrl(`/editor/${slug}`);
+  }
+
+  removeArticle(slug: string) {
+    this.store.dispatch(removeArticle({ slug }));
   }
 
   submitComment(slug: string, body: string) {

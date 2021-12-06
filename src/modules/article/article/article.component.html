@@ -3,8 +3,7 @@
 		<div class="banner">
 			<div class="container">
 				<h1>{{ article.title }}</h1>
-				<app-article-actions [createdAt]="article.createdAt" [user]="article.author"
-					[favoritesCount]="article.favoritesCount" [articleSlug]="article.slug"></app-article-actions>
+				<ng-container *ngTemplateOutlet="actions"></ng-container>
 			</div>
 		</div>
 
@@ -16,10 +15,17 @@
 			</div>
 			<hr />
 			<div class="article-actions">
-				<app-article-actions [createdAt]="article.createdAt" [user]="article.author"
-					[favoritesCount]="article.favoritesCount" [articleSlug]="article.slug"
-					(followUser)="toggleFollow($event)"></app-article-actions>
+				<ng-container *ngTemplateOutlet="actions"></ng-container>
 			</div>
+
+			<ng-template #actions>
+				<app-article-actions [isAuthorActions]="(user$ | async)?.username === article.author.username"
+					[createdAt]="article.createdAt" [user]="article.author" [favoritesCount]="article.favoritesCount"
+					[articleSlug]="article.slug" (followUser)="toggleFollow($event)"
+					(removeArticle)="removeArticle($event)" (editArticle)="navigateToEditor($event)">
+				</app-article-actions>
+
+			</ng-template>
 
 			<div class="row">
 				<div class="col-xs-12 col-md-8 offset-md-2">
